@@ -31,3 +31,7 @@ npm run dev
 ```
 
 Then navigate to `http://localhost:3000` in your browser and you should see the project there
+
+Pull Request exercise - Add your name to this list:
+
+- Wyatt Hansen
