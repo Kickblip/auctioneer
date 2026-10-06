@@ -1,21 +1,33 @@
-# Next.js template
+Follow these steps to set up this project and run locally
 
-This is a Next.js template with shadcn/ui.
+**BEFORE EVERYTHING ELSE:** Install prettier in VSCode (https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+)
 
-## Adding components
-
-To add components to your app, run the following command:
+1. Clone and install
 
 ```bash
-npx shadcn@latest add button
+git clone https://github.com/Kickblip/auctioneer
+cd auctioneer
+npm install
 ```
 
-This will place the ui components in the `components` directory.
+If you do not have npm installed, install Node.js through NVM. npm will be installed with Node. https://nodejs.org/en/download
 
-## Using components
+2. Make a copy of the `.env.example` file and rename it to `.env`
 
-To use the components in your app, import them as follows:
+3. Check https://stache.utexas.edu/ and populate the environment variables with the values shared by Wyatt. If you see nothing in stache let Wyatt know
 
-```tsx
-import { Button } from "@/components/ui/button";
+4. Install spacetime CLI https://spacetimedb.com/install
+
+5. Generate spacetime types with `npm run spacetime:generate`
+
+And now run the project:
+Run the following commands in separate terminal windows:
+
+```bash
+spacetime start
+npm run spacetime:publish:local
+npm run dev
 ```
+
+Then navigate to `http://localhost:3000` in your browser and you should see the project there
