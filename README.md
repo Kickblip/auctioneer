@@ -36,4 +36,5 @@ Pull Request exercise - Add your name to this list:
 
 - Wyatt - Orange
 - Ayush - Green
-- Erik - Red
+
+- Erik 
