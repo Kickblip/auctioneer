@@ -1,3 +1,4 @@
+
 Follow these steps to set up this project and run locally
 
 **BEFORE EVERYTHING ELSE:** Install prettier in VSCode (https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
@@ -36,3 +37,4 @@ Pull Request exercise - Add your name to this list:
 
 - Wyatt - Orange
 - Ayush - Green
+- Gaoyu 
