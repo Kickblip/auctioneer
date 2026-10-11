@@ -38,3 +38,5 @@ Pull Request exercise - Add your name to this list:
 - Wyatt - Orange
 - Ayush - Green
 - Gaoyu - Blue
+- Erik - Red
+- Enoch
