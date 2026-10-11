@@ -6,5 +6,7 @@
 import { type Infer as __Infer } from "spacetimedb";
 
 // Import all reducer arg schemas
+import CreateLobbyReducer from "../create_lobby_reducer";
 
+export type CreateLobbyParams = __Infer<typeof CreateLobbyReducer>;
 

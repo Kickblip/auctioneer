@@ -10,16 +10,105 @@ import {
   type Infer as __Infer,
 } from "spacetimedb";
 
+export const Lobby = __t.object("Lobby", {
+  id: __t.string(),
+  owner: __t.identity(),
+  createdAt: __t.timestamp(),
+});
+export type Lobby = __Infer<typeof Lobby>;
+
+export const LobbyPlayer = __t.object("LobbyPlayer", {
+  playerId: __t.u32(),
+  lobbyId: __t.string(),
+});
+export type LobbyPlayer = __Infer<typeof LobbyPlayer>;
+
 export const Player = __t.object("Player", {
   id: __t.u32(),
   name: __t.string(),
   discord: __t.string(),
   riotIdGameName: __t.string(),
   riotIdTagline: __t.string(),
-  currentRank: __t.string(),
-  peakRank: __t.string(),
-  mainRole: __t.string(),
-  secondaryRole: __t.option(__t.string()),
+  get currentRank() {
+    return Rank;
+  },
+  get peakRank() {
+    return Rank;
+  },
+  get mainRole() {
+    return __t.option(Role);
+  },
+  get secondaryRole() {
+    return __t.option(Role);
+  },
 });
 export type Player = __Infer<typeof Player>;
+
+export const PlayerInput = __t.object("PlayerInput", {
+  name: __t.string(),
+  discord: __t.string(),
+  riotIdGameName: __t.string(),
+  riotIdTagline: __t.string(),
+  get currentRank() {
+    return Rank;
+  },
+  get peakRank() {
+    return Rank;
+  },
+  get mainRole() {
+    return __t.option(Role);
+  },
+  get secondaryRole() {
+    return __t.option(Role);
+  },
+});
+export type PlayerInput = __Infer<typeof PlayerInput>;
+
+// The tagged union or sum type for the algebraic type `Rank`.
+export const Rank = __t.enum("Rank", {
+  Unranked: __t.unit(),
+  IronIv: __t.unit(),
+  IronIii: __t.unit(),
+  IronIi: __t.unit(),
+  IronI: __t.unit(),
+  BronzeIv: __t.unit(),
+  BronzeIii: __t.unit(),
+  BronzeIi: __t.unit(),
+  BronzeI: __t.unit(),
+  SilverIv: __t.unit(),
+  SilverIii: __t.unit(),
+  SilverIi: __t.unit(),
+  SilverI: __t.unit(),
+  GoldIv: __t.unit(),
+  GoldIii: __t.unit(),
+  GoldIi: __t.unit(),
+  GoldI: __t.unit(),
+  PlatinumIv: __t.unit(),
+  PlatinumIii: __t.unit(),
+  PlatinumIi: __t.unit(),
+  PlatinumI: __t.unit(),
+  EmeraldIv: __t.unit(),
+  EmeraldIii: __t.unit(),
+  EmeraldIi: __t.unit(),
+  EmeraldI: __t.unit(),
+  DiamondIv: __t.unit(),
+  DiamondIii: __t.unit(),
+  DiamondIi: __t.unit(),
+  DiamondI: __t.unit(),
+  Master: __t.unit(),
+  Grandmaster: __t.unit(),
+  Challenger: __t.unit(),
+});
+export type Rank = __Infer<typeof Rank>;
+
+// The tagged union or sum type for the algebraic type `Role`.
+export const Role = __t.enum("Role", {
+  Top: __t.unit(),
+  Jungle: __t.unit(),
+  Mid: __t.unit(),
+  Adc: __t.unit(),
+  Support: __t.unit(),
+  Fill: __t.unit(),
+});
+export type Role = __Infer<typeof Role>;
 

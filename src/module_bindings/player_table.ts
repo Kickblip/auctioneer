@@ -9,6 +9,11 @@ import {
   type AlgebraicTypeType as __AlgebraicTypeType,
   type Infer as __Infer,
 } from "spacetimedb";
+import {
+  Rank,
+  Role,
+} from "./types";
+
 
 export default __t.row({
   id: __t.u32().primaryKey(),
@@ -16,8 +21,16 @@ export default __t.row({
   discord: __t.string(),
   riotIdGameName: __t.string().name("riot_id_game_name"),
   riotIdTagline: __t.string().name("riot_id_tagline"),
-  currentRank: __t.string().name("current_rank"),
-  peakRank: __t.string().name("peak_rank"),
-  mainRole: __t.string().name("main_role"),
-  secondaryRole: __t.option(__t.string()).name("secondary_role"),
+  get currentRank() {
+    return Rank.name("current_rank");
+  },
+  get peakRank() {
+    return Rank.name("peak_rank");
+  },
+  get mainRole() {
+    return __t.option(Role).name("main_role");
+  },
+  get secondaryRole() {
+    return __t.option(Role).name("secondary_role");
+  },
 });
