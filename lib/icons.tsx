@@ -169,3 +169,27 @@ export function SupportRoleIcon({
     </svg>
   )
 }
+
+export function FillRoleIcon({
+  size = 24,
+  className,
+}: {
+  size?: number
+  className?: string
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 112 97"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M28.5 0H40L56 30L73.5 0H84L88 9L72 39H104L112 48L104 57H72L88 86L84 97H71L56 69L41 97H28.5L24 86L40 57H8L0 48L8 39H40L24 9L28.5 0Z"
+        className="fill-chart-3 dark:fill-chart-1"
+      />
+    </svg>
+  )
+}
