@@ -7,6 +7,16 @@ import { type Infer as __Infer } from "spacetimedb";
 
 // Import all reducer arg schemas
 import CreateLobbyReducer from "../create_lobby_reducer";
+import JoinAsCaptainReducer from "../join_as_captain_reducer";
+import JoinAsOwnerReducer from "../join_as_owner_reducer";
+import LinkLegacyLobbyOwnerReducer from "../link_legacy_lobby_owner_reducer";
+import SetPlayerCaptainReducer from "../set_player_captain_reducer";
+import UpdatePlayerAdminNotesReducer from "../update_player_admin_notes_reducer";
 
 export type CreateLobbyParams = __Infer<typeof CreateLobbyReducer>;
+export type JoinAsCaptainParams = __Infer<typeof JoinAsCaptainReducer>;
+export type JoinAsOwnerParams = __Infer<typeof JoinAsOwnerReducer>;
+export type LinkLegacyLobbyOwnerParams = __Infer<typeof LinkLegacyLobbyOwnerReducer>;
+export type SetPlayerCaptainParams = __Infer<typeof SetPlayerCaptainReducer>;
+export type UpdatePlayerAdminNotesParams = __Infer<typeof UpdatePlayerAdminNotesReducer>;
 

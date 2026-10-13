@@ -3,8 +3,8 @@
 import { useRef, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { Upload } from "lucide-react"
-import { useReducer, useSpacetimeDB } from "spacetimedb/react"
-import { reducers } from "@/src/module_bindings"
+import { useSpacetimeDB } from "spacetimedb/react"
+import { useAuthenticatedAction } from "@/components/spacetime-provider"
 import type { PlayerRecords } from "@/app/api/players/parse/route"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -13,7 +13,7 @@ export function SpreadsheetUploadForm() {
   const router = useRouter()
   const [isNavigating, startTransition] = useTransition()
   const { isActive, connectionError } = useSpacetimeDB()
-  const createLobby = useReducer(reducers.createLobby)
+  const authenticatedAction = useAuthenticatedAction()
   const inputRef = useRef<HTMLInputElement>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState("")
@@ -51,13 +51,15 @@ export function SpreadsheetUploadForm() {
 
             const { players }: PlayerRecords = await response.json()
             const lobbyId = crypto.randomUUID()
-            await createLobby({
-              lobbyId,
-              players,
-            })
+            await authenticatedAction((connection) =>
+              connection.reducers.createLobby({
+                lobbyId,
+                players,
+              })
+            )
 
             startTransition(() => {
-              router.push(`/lobby/${lobbyId}/edit`)
+              router.push(`/lobby/${lobbyId}`)
             })
           } catch (error) {
             setError(

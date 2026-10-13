@@ -33,4 +33,5 @@ export default __t.row({
   get secondaryRole() {
     return __t.option(Role).name("secondary_role");
   },
+  adminNotes: __t.string().name("admin_notes"),
 });

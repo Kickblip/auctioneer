@@ -17,6 +17,7 @@ test("shows only the requested lobby's players in insertion order without changi
     peakRank: Rank.Master,
     mainRole: Role.Mid,
     secondaryRole: undefined,
+    adminNotes: "",
   }
   const players = Object.freeze([
     { ...player, id: 3, name: "Other lobby" },

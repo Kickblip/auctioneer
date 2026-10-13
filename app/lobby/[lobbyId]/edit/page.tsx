@@ -11,6 +11,8 @@ import { useSpacetimeDB, useTable } from "spacetimedb/react"
 import { tables } from "@/src/module_bindings"
 import type { Player } from "@/src/module_bindings/types"
 import { Spinner } from "@/components/ui/spinner"
+import { useLobbyRole } from "@/components/lobby-access"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -57,6 +59,7 @@ export default function LobbyEditPage({
   params: Promise<{ lobbyId: string }>
 }) {
   const { lobbyId } = use(params)
+  const { role, changeRole } = useLobbyRole()
   const { isActive, connectionError } = useSpacetimeDB()
   const [lobbies, lobbyReady] = useTable(
     tables.lobby.where((lobby) => lobby.id.eq(lobbyId))
@@ -90,6 +93,15 @@ export default function LobbyEditPage({
       <header>
         <h1 className="text-2xl font-semibold">Edit lobby</h1>
         <p className="text-sm break-all text-muted-foreground">{lobbyId}</p>
+        <p className="text-sm">
+          Role: <strong>{role}</strong>
+        </p>
+        <Button variant="ghost" size="sm" onClick={changeRole}>
+          Change role
+        </Button>
+        <Link href={`/lobby/${lobbyId}`} className="ml-4 text-sm underline">
+          Open draft
+        </Link>
       </header>
 
       {connectionError ? (

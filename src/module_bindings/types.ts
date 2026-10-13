@@ -10,10 +10,18 @@ import {
   type Infer as __Infer,
 } from "spacetimedb";
 
+export const Captain = __t.object("Captain", {
+  playerId: __t.u32(),
+  lobbyId: __t.string(),
+  clerkUserId: __t.string(),
+});
+export type Captain = __Infer<typeof Captain>;
+
 export const Lobby = __t.object("Lobby", {
   id: __t.string(),
   owner: __t.identity(),
   createdAt: __t.timestamp(),
+  ownerClerkId: __t.string(),
 });
 export type Lobby = __Infer<typeof Lobby>;
 
@@ -41,6 +49,7 @@ export const Player = __t.object("Player", {
   get secondaryRole() {
     return __t.option(Role);
   },
+  adminNotes: __t.string(),
 });
 export type Player = __Infer<typeof Player>;
 

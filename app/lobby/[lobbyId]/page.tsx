@@ -15,7 +15,10 @@ import { Blobatar } from "@blobatar/react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import { Textarea } from "@/components/ui/textarea"
+import { PlayerAdminNotes } from "@/components/player-admin-notes"
+import { PlayerCaptain } from "@/components/player-captain"
+import { useLobbyRole } from "@/components/lobby-access"
+import { UserButton } from "@clerk/nextjs"
 import { getLobbyPlayers, rankLabel, roleLabel } from "./edit/players"
 
 const roleIcons = {
@@ -36,6 +39,8 @@ export default function Page({
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null)
   const [search, setSearch] = useState("")
   const { isActive, connectionError } = useSpacetimeDB()
+  const { role, changeRole } = useLobbyRole()
+  const isOwner = role === "Owner"
   const membershipQuery = tables.lobbyPlayer.where((member) =>
     member.lobbyId.eq(lobbyId)
   )
@@ -61,8 +66,14 @@ export default function Page({
 
   return (
     <div className="flex h-dvh w-full overflow-x-auto overflow-y-hidden">
-      <div className="shrink-0 border-r bg-sidebar p-4">
-        <p>A</p>
+      <div className="flex shrink-0 flex-col items-start gap-3 border-r bg-sidebar p-4">
+        <UserButton />
+        <p className="text-xs">
+          Role: <strong>{role}</strong>
+        </p>
+        <Button variant="ghost" size="sm" onClick={changeRole}>
+          Change role
+        </Button>
       </div>
 
       <div className="flex w-xs shrink-0 flex-col border-r bg-sidebar">
@@ -298,15 +309,21 @@ export default function Page({
           </p>
         )}
 
-        <div className="mt-8 flex flex-col gap-1">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Admin Notes</span>
-            <span className="text-xs font-medium text-muted-foreground italic">
-              Read Only
-            </span>
-          </div>
-          <Textarea value="Type your message here." disabled />
-        </div>
+        {selectedPlayer && (
+          <PlayerCaptain
+            key={`captain-${selectedPlayer.id}`}
+            playerId={selectedPlayer.id}
+            isOwner={isOwner}
+          />
+        )}
+
+        {selectedPlayer && (
+          <PlayerAdminNotes
+            key={selectedPlayer.id}
+            player={selectedPlayer}
+            isOwner={isOwner}
+          />
+        )}
       </div>
     </div>
   )

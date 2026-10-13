@@ -63,7 +63,7 @@ export function ActiveDrafts() {
             </div>
             <Button asChild variant="outline" className="w-fit">
               <Link
-                href={`/lobby/${draft.id}/edit`}
+                href={`/lobby/${draft.id}`}
                 aria-label={`Open draft ${draft.id}`}
               >
                 Open draft

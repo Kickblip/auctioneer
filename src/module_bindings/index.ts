@@ -35,10 +35,16 @@ import {
 
 // Import all reducer arg schemas
 import CreateLobbyReducer from "./create_lobby_reducer";
+import JoinAsCaptainReducer from "./join_as_captain_reducer";
+import JoinAsOwnerReducer from "./join_as_owner_reducer";
+import LinkLegacyLobbyOwnerReducer from "./link_legacy_lobby_owner_reducer";
+import SetPlayerCaptainReducer from "./set_player_captain_reducer";
+import UpdatePlayerAdminNotesReducer from "./update_player_admin_notes_reducer";
 
 // Import all procedure arg schemas
 
 // Import all table schema definitions
+import CaptainRow from "./captain_table";
 import LobbyRow from "./lobby_table";
 import LobbyPlayerRow from "./lobby_player_table";
 import PlayerRow from "./player_table";
@@ -47,6 +53,20 @@ import PlayerRow from "./player_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  captain: __table({
+    name: 'captain',
+    indexes: [
+      { accessor: 'lobbyId', name: 'captain_lobby_id_idx_btree', algorithm: 'btree', columns: [
+        'lobbyId',
+      ] },
+      { accessor: 'playerId', name: 'captain_player_id_idx_btree', algorithm: 'btree', columns: [
+        'playerId',
+      ] },
+    ],
+    constraints: [
+      { name: 'captain_player_id_key', constraint: 'unique', columns: ['playerId'] },
+    ],
+  }, CaptainRow),
   lobby: __table({
     name: 'lobby',
     indexes: [
@@ -88,6 +108,11 @@ const tablesSchema = __schema({
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
   __reducerSchema("create_lobby", CreateLobbyReducer),
+  __reducerSchema("join_as_captain", JoinAsCaptainReducer),
+  __reducerSchema("join_as_owner", JoinAsOwnerReducer),
+  __reducerSchema("link_legacy_lobby_owner", LinkLegacyLobbyOwnerReducer),
+  __reducerSchema("set_player_captain", SetPlayerCaptainReducer),
+  __reducerSchema("update_player_admin_notes", UpdatePlayerAdminNotesReducer),
 );
 
 /** The schema information for all procedures in this module. This is defined the same way as the procedures would have been defined in the server. */
