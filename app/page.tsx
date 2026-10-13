@@ -1,4 +1,5 @@
 import { Show, SignInButton } from "@clerk/nextjs"
+import { ActiveDrafts } from "@/components/active-drafts"
 import { SpreadsheetUploadForm } from "@/components/spreadsheet-upload-form"
 import { Button } from "@/components/ui/button"
 
@@ -13,9 +14,11 @@ export default function Page() {
 
       <div className="flex w-full max-w-5xl flex-col items-center gap-12 p-8">
         <div className="w-full rounded-md border bg-sidebar">
-          <h2 className="px-4 py-2">Join an existing event</h2>
+          <h2 className="px-4 py-2">Active drafts</h2>
 
-          <div className="rounded-b-md bg-background p-4">sdfsdfsdf</div>
+          <div className="rounded-b-md bg-background p-4">
+            <ActiveDrafts />
+          </div>
         </div>
 
         <div className="w-full rounded-md border bg-sidebar">
