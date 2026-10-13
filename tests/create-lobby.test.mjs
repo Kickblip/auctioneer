@@ -20,7 +20,16 @@ test("creates a roster owned by the verified Clerk account", () => {
       { playerId: 2, lobbyId },
     ]
   )
-  assert.deepEqual(db.player.id.find(1), { id: 1, ...player, adminNotes: "" })
+  assert.deepEqual(db.player.id.find(1), {
+    id: 1,
+    ...player,
+    adminNotes: "",
+    currentLp: 0,
+    peakLp: 0,
+    tournamentWins: 0,
+    effectivePeakRank: "",
+    opggUrl: "",
+  })
   assert.equal(db.player.id.find(2).name, "Support")
   assert.throws(
     () => reducers.createLobby(ctx, { lobbyId, players: [player] }),

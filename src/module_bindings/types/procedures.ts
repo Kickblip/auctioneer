@@ -6,5 +6,11 @@
 import { type Infer as __Infer } from "spacetimedb";
 
 // Import all procedure arg schemas
+import * as MyScoutingNoteProcedure from "../my_scouting_note_procedure";
+import * as ServerTimeProcedure from "../server_time_procedure";
 
+export type MyScoutingNoteArgs = __Infer<typeof MyScoutingNoteProcedure.params>;
+export type MyScoutingNoteResult = __Infer<typeof MyScoutingNoteProcedure.returnType>;
+export type ServerTimeArgs = __Infer<typeof ServerTimeProcedure.params>;
+export type ServerTimeResult = __Infer<typeof ServerTimeProcedure.returnType>;
 

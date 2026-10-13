@@ -8,8 +8,8 @@ import { Spinner } from "@/components/ui/spinner"
 
 export function ActiveDrafts() {
   const { isActive, connectionError } = useSpacetimeDB()
-  // shortcut: all lobbies are active until a completed or archived status exists.
-  const [lobbies, lobbiesReady] = useTable(tables.lobby)
+  const [rows, lobbiesReady] = useTable(tables.lobby)
+  const lobbies = rows.filter((lobby) => !lobby.completed)
 
   if (connectionError) {
     return (
@@ -52,7 +52,7 @@ export function ActiveDrafts() {
           >
             <div className="min-w-0">
               <p className="font-medium break-all">
-                Draft {draft.id.slice(0, 8)}
+                {draft.eventName || `Draft ${draft.id.slice(0, 8)}`}
               </p>
               <p className="text-sm text-muted-foreground">
                 Created{" "}

@@ -130,3 +130,11 @@
     @apply font-sans;
     }
 }
+@keyframes auction-wheel-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(var(--wheel-end)); }
+}
+.auction-wheel { animation: auction-wheel-spin 2.5s cubic-bezier(.15,.65,.2,1) forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .auction-wheel { animation: none; transform: rotate(var(--wheel-end)); }
+}

@@ -34,16 +34,34 @@ import {
 } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AdjustWalletReducer from "./adjust_wallet_reducer";
+import AssignPlayerRoleReducer from "./assign_player_role_reducer";
+import ConfigureAuctionReducer from "./configure_auction_reducer";
+import ControlAuctionReducer from "./control_auction_reducer";
 import CreateLobbyReducer from "./create_lobby_reducer";
+import EditPickOrderReducer from "./edit_pick_order_reducer";
 import JoinAsCaptainReducer from "./join_as_captain_reducer";
 import JoinAsOwnerReducer from "./join_as_owner_reducer";
 import LinkLegacyLobbyOwnerReducer from "./link_legacy_lobby_owner_reducer";
+import NominatePlayerReducer from "./nominate_player_reducer";
+import PlaceBidReducer from "./place_bid_reducer";
+import ReturnPlayerReducer from "./return_player_reducer";
+import SaveScoutingNoteReducer from "./save_scouting_note_reducer";
+import SetAuctionTimerReducer from "./set_auction_timer_reducer";
 import SetPlayerCaptainReducer from "./set_player_captain_reducer";
+import TransferPlayerReducer from "./transfer_player_reducer";
+import UpdateAuctionTimersReducer from "./update_auction_timers_reducer";
 import UpdatePlayerAdminNotesReducer from "./update_player_admin_notes_reducer";
+import UpdatePlayerProfileReducer from "./update_player_profile_reducer";
+import UpdateRankRulesReducer from "./update_rank_rules_reducer";
 
 // Import all procedure arg schemas
+import * as MyScoutingNoteProcedure from "./my_scouting_note_procedure";
+import * as ServerTimeProcedure from "./server_time_procedure";
 
 // Import all table schema definitions
+import AuctionRow from "./auction_table";
+import AuctionLogRow from "./auction_log_table";
 import CaptainRow from "./captain_table";
 import LobbyRow from "./lobby_table";
 import LobbyPlayerRow from "./lobby_player_table";
@@ -53,6 +71,31 @@ import PlayerRow from "./player_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  auction: __table({
+    name: 'auction',
+    indexes: [
+      { accessor: 'lobbyId', name: 'auction_lobby_id_idx_btree', algorithm: 'btree', columns: [
+        'lobbyId',
+      ] },
+    ],
+    constraints: [
+      { name: 'auction_lobby_id_key', constraint: 'unique', columns: ['lobbyId'] },
+    ],
+  }, AuctionRow),
+  auctionLog: __table({
+    name: 'auction_log',
+    indexes: [
+      { accessor: 'id', name: 'auction_log_id_idx_btree', algorithm: 'btree', columns: [
+        'id',
+      ] },
+      { accessor: 'lobbyId', name: 'auction_log_lobby_id_idx_btree', algorithm: 'btree', columns: [
+        'lobbyId',
+      ] },
+    ],
+    constraints: [
+      { name: 'auction_log_id_key', constraint: 'unique', columns: ['id'] },
+    ],
+  }, AuctionLogRow),
   captain: __table({
     name: 'captain',
     indexes: [
@@ -107,16 +150,32 @@ const tablesSchema = __schema({
 
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
+  __reducerSchema("adjust_wallet", AdjustWalletReducer),
+  __reducerSchema("assign_player_role", AssignPlayerRoleReducer),
+  __reducerSchema("configure_auction", ConfigureAuctionReducer),
+  __reducerSchema("control_auction", ControlAuctionReducer),
   __reducerSchema("create_lobby", CreateLobbyReducer),
+  __reducerSchema("edit_pick_order", EditPickOrderReducer),
   __reducerSchema("join_as_captain", JoinAsCaptainReducer),
   __reducerSchema("join_as_owner", JoinAsOwnerReducer),
   __reducerSchema("link_legacy_lobby_owner", LinkLegacyLobbyOwnerReducer),
+  __reducerSchema("nominate_player", NominatePlayerReducer),
+  __reducerSchema("place_bid", PlaceBidReducer),
+  __reducerSchema("return_player", ReturnPlayerReducer),
+  __reducerSchema("save_scouting_note", SaveScoutingNoteReducer),
+  __reducerSchema("set_auction_timer", SetAuctionTimerReducer),
   __reducerSchema("set_player_captain", SetPlayerCaptainReducer),
+  __reducerSchema("transfer_player", TransferPlayerReducer),
+  __reducerSchema("update_auction_timers", UpdateAuctionTimersReducer),
   __reducerSchema("update_player_admin_notes", UpdatePlayerAdminNotesReducer),
+  __reducerSchema("update_player_profile", UpdatePlayerProfileReducer),
+  __reducerSchema("update_rank_rules", UpdateRankRulesReducer),
 );
 
 /** The schema information for all procedures in this module. This is defined the same way as the procedures would have been defined in the server. */
 const proceduresSchema = __procedures(
+  __procedureSchema("my_scouting_note", MyScoutingNoteProcedure.params, MyScoutingNoteProcedure.returnType),
+  __procedureSchema("server_time", ServerTimeProcedure.params, ServerTimeProcedure.returnType),
 );
 
 /** The remote SpacetimeDB module schema, both runtime and type information. */

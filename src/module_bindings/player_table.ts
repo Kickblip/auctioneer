@@ -34,4 +34,9 @@ export default __t.row({
     return __t.option(Role).name("secondary_role");
   },
   adminNotes: __t.string().name("admin_notes"),
+  currentLp: __t.u32().name("current_lp"),
+  peakLp: __t.u32().name("peak_lp"),
+  tournamentWins: __t.u32().name("tournament_wins"),
+  effectivePeakRank: __t.string().name("effective_peak_rank"),
+  opggUrl: __t.string().name("opgg_url"),
 });

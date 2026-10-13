@@ -3,6 +3,8 @@ import { mock, test } from "node:test"
 import { Rank, Role } from "../src/module_bindings/types.ts"
 
 const parse = mock.fn()
+const auth = mock.fn(async () => ({ userId: "user_test" }))
+mock.module("@clerk/nextjs/server", { namedExports: { auth } })
 mock.module("openai", {
   defaultExport: class OpenAI {
     responses = { parse }
@@ -10,6 +12,13 @@ mock.module("openai", {
 })
 
 const { POST } = await import("../app/api/players/parse/route.ts")
+
+test("requires Clerk sign-in before parsing a spreadsheet", async () => {
+  const calls = parse.mock.callCount()
+  auth.mock.mockImplementationOnce(async () => ({ userId: null }))
+  assert.equal((await POST(upload())).status, 401)
+  assert.equal(parse.mock.callCount(), calls)
+})
 
 const player = {
   name: "Kickball",
@@ -20,6 +29,10 @@ const player = {
   peakRank: "Master",
   mainRole: "Mid",
   secondaryRole: null,
+  currentLp: 34,
+  peakLp: 120,
+  tournamentWins: 2,
+  opggUrl: "https://op.gg/lol/summoners/na/Kickball-NA1",
 }
 
 function complete(players) {
@@ -52,6 +65,10 @@ test("returns canonical enum values ready for lobby creation", async () => {
         currentRank: Rank.PlatinumIii,
         peakRank: Rank.Master,
         mainRole: Role.Mid,
+        currentLp: 34,
+        peakLp: 120,
+        tournamentWins: 2,
+        opggUrl: player.opggUrl,
       },
     ],
   })

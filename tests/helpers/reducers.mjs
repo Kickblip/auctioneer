@@ -11,6 +11,8 @@ const hooks = registerHooks({
       context.parentURL.endsWith("/spacetimedb/src/index.ts")
     )
       return next("./auth.ts", context)
+    if (specifier === "../../lib/auction/rules")
+      return next("../../lib/auction/rules.ts", context)
     return next(specifier, context)
   },
   load(url, context, next) {
@@ -42,12 +44,17 @@ export function database() {
     ["player", "id"],
     ["lobbyPlayer", "playerId"],
     ["captain", "playerId"],
+    ["auction", "lobbyId"],
+    ["auctionTimer", "scheduledId"],
+    ["auctionLog", "id"],
+    ["scoutingNote", "key"],
   ]) {
     const records = new Map()
     let nextId = 1
     db[name] = {
       insert(row) {
         if (name === "player" && row.id === 0) row = { ...row, id: nextId++ }
+        if (row[key] === 0n) row = { ...row, [key]: BigInt(nextId++) }
         if (records.has(row[key])) throw new Error("Duplicate primary key")
         records.set(row[key], row)
         return row
@@ -57,10 +64,14 @@ export function database() {
         update: (row) => records.set(row[key], row),
         delete: (id) => records.delete(id),
       },
-      lobbyId: {
-        filter: (id) =>
-          [...records.values()].filter((row) => row.lobbyId === id),
-      },
+      ...(key !== "lobbyId"
+        ? {
+            lobbyId: {
+              filter: (id) =>
+                [...records.values()].filter((row) => row.lobbyId === id),
+            },
+          }
+        : {}),
       iter: () => records.values(),
     }
   }
@@ -75,8 +86,13 @@ export function context(db, userId, jwtOverrides = {}) {
       isEqual(other) {
         return this.id === other.id
       },
+      toHexString() {
+        return this.id
+      },
     },
     timestamp: { microsSinceUnixEpoch: 1_800_000_000_000_000n },
+    databaseIdentity: { id: "server" },
+    random: () => 0.5,
     senderAuth: {
       jwt: userId
         ? {

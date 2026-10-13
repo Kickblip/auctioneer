@@ -6,17 +6,45 @@
 import { type Infer as __Infer } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AdjustWalletReducer from "../adjust_wallet_reducer";
+import AssignPlayerRoleReducer from "../assign_player_role_reducer";
+import ConfigureAuctionReducer from "../configure_auction_reducer";
+import ControlAuctionReducer from "../control_auction_reducer";
 import CreateLobbyReducer from "../create_lobby_reducer";
+import EditPickOrderReducer from "../edit_pick_order_reducer";
 import JoinAsCaptainReducer from "../join_as_captain_reducer";
 import JoinAsOwnerReducer from "../join_as_owner_reducer";
 import LinkLegacyLobbyOwnerReducer from "../link_legacy_lobby_owner_reducer";
+import NominatePlayerReducer from "../nominate_player_reducer";
+import PlaceBidReducer from "../place_bid_reducer";
+import ReturnPlayerReducer from "../return_player_reducer";
+import SaveScoutingNoteReducer from "../save_scouting_note_reducer";
+import SetAuctionTimerReducer from "../set_auction_timer_reducer";
 import SetPlayerCaptainReducer from "../set_player_captain_reducer";
+import TransferPlayerReducer from "../transfer_player_reducer";
+import UpdateAuctionTimersReducer from "../update_auction_timers_reducer";
 import UpdatePlayerAdminNotesReducer from "../update_player_admin_notes_reducer";
+import UpdatePlayerProfileReducer from "../update_player_profile_reducer";
+import UpdateRankRulesReducer from "../update_rank_rules_reducer";
 
+export type AdjustWalletParams = __Infer<typeof AdjustWalletReducer>;
+export type AssignPlayerRoleParams = __Infer<typeof AssignPlayerRoleReducer>;
+export type ConfigureAuctionParams = __Infer<typeof ConfigureAuctionReducer>;
+export type ControlAuctionParams = __Infer<typeof ControlAuctionReducer>;
 export type CreateLobbyParams = __Infer<typeof CreateLobbyReducer>;
+export type EditPickOrderParams = __Infer<typeof EditPickOrderReducer>;
 export type JoinAsCaptainParams = __Infer<typeof JoinAsCaptainReducer>;
 export type JoinAsOwnerParams = __Infer<typeof JoinAsOwnerReducer>;
 export type LinkLegacyLobbyOwnerParams = __Infer<typeof LinkLegacyLobbyOwnerReducer>;
+export type NominatePlayerParams = __Infer<typeof NominatePlayerReducer>;
+export type PlaceBidParams = __Infer<typeof PlaceBidReducer>;
+export type ReturnPlayerParams = __Infer<typeof ReturnPlayerReducer>;
+export type SaveScoutingNoteParams = __Infer<typeof SaveScoutingNoteReducer>;
+export type SetAuctionTimerParams = __Infer<typeof SetAuctionTimerReducer>;
 export type SetPlayerCaptainParams = __Infer<typeof SetPlayerCaptainReducer>;
+export type TransferPlayerParams = __Infer<typeof TransferPlayerReducer>;
+export type UpdateAuctionTimersParams = __Infer<typeof UpdateAuctionTimersReducer>;
 export type UpdatePlayerAdminNotesParams = __Infer<typeof UpdatePlayerAdminNotesReducer>;
+export type UpdatePlayerProfileParams = __Infer<typeof UpdatePlayerProfileReducer>;
+export type UpdateRankRulesParams = __Infer<typeof UpdateRankRulesReducer>;
 

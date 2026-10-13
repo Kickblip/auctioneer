@@ -1,6 +1,13 @@
 "use client"
 
-import { createContext, useContext, useState } from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { SignInButton, UserButton, useAuth } from "@clerk/nextjs"
@@ -18,6 +25,15 @@ const LobbyRoleContext = createContext<{
   role: DraftRole
   changeRole: () => void
 } | null>(null)
+
+function subscribeToJoin(callback: () => void) {
+  window.addEventListener("storage", callback)
+  window.addEventListener("auctioneer-join", callback)
+  return () => {
+    window.removeEventListener("storage", callback)
+    window.removeEventListener("auctioneer-join", callback)
+  }
+}
 
 export function useLobbyRole() {
   const context = useContext(LobbyRoleContext)
@@ -58,7 +74,24 @@ export function LobbyAccess({
       : "Spectator"
   })
   const [playerId, setPlayerId] = useState(searchParams.get("captain") ?? "")
-  const [joined, setJoined] = useState<JoinedRole | null>(null)
+  const storageKey = `auctioneer:join:${lobbyId}`
+  const storedJoin = useSyncExternalStore(
+    subscribeToJoin,
+    useCallback(() => sessionStorage.getItem(storageKey), [storageKey]),
+    () => null
+  )
+  const joined = useMemo<JoinedRole | null>(() => {
+    try {
+      return storedJoin ? JSON.parse(storedJoin) : null
+    } catch {
+      return null
+    }
+  }, [storedJoin])
+  const setJoined = (value: JoinedRole | null) => {
+    if (value) sessionStorage.setItem(storageKey, JSON.stringify(value))
+    else sessionStorage.removeItem(storageKey)
+    window.dispatchEvent(new Event("auctioneer-join"))
+  }
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState("")
   const lobby = lobbies.find((row) => row.id === lobbyId)

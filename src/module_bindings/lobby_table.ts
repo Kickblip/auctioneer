@@ -15,4 +15,6 @@ export default __t.row({
   owner: __t.identity(),
   createdAt: __t.timestamp().name("created_at"),
   ownerClerkId: __t.string().name("owner_clerk_id"),
+  eventName: __t.string().name("event_name"),
+  completed: __t.bool(),
 });

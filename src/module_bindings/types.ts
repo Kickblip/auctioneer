@@ -10,6 +10,33 @@ import {
   type Infer as __Infer,
 } from "spacetimedb";
 
+export const Auction = __t.object("Auction", {
+  lobbyId: __t.string(),
+  state: __t.string(),
+  revision: __t.u32(),
+  updatedAt: __t.timestamp(),
+});
+export type Auction = __Infer<typeof Auction>;
+
+export const AuctionLog = __t.object("AuctionLog", {
+  id: __t.u64(),
+  lobbyId: __t.string(),
+  at: __t.timestamp(),
+  actor: __t.string(),
+  kind: __t.string(),
+  message: __t.string(),
+  data: __t.string(),
+});
+export type AuctionLog = __Infer<typeof AuctionLog>;
+
+export const AuctionTimer = __t.object("AuctionTimer", {
+  scheduledId: __t.u64(),
+  scheduledAt: __t.scheduleAt(),
+  lobbyId: __t.string(),
+  revision: __t.u32(),
+});
+export type AuctionTimer = __Infer<typeof AuctionTimer>;
+
 export const Captain = __t.object("Captain", {
   playerId: __t.u32(),
   lobbyId: __t.string(),
@@ -22,6 +49,8 @@ export const Lobby = __t.object("Lobby", {
   owner: __t.identity(),
   createdAt: __t.timestamp(),
   ownerClerkId: __t.string(),
+  eventName: __t.string(),
+  completed: __t.bool(),
 });
 export type Lobby = __Infer<typeof Lobby>;
 
@@ -50,6 +79,11 @@ export const Player = __t.object("Player", {
     return __t.option(Role);
   },
   adminNotes: __t.string(),
+  currentLp: __t.u32(),
+  peakLp: __t.u32(),
+  tournamentWins: __t.u32(),
+  effectivePeakRank: __t.string(),
+  opggUrl: __t.string(),
 });
 export type Player = __Infer<typeof Player>;
 
@@ -70,6 +104,10 @@ export const PlayerInput = __t.object("PlayerInput", {
   get secondaryRole() {
     return __t.option(Role);
   },
+  currentLp: __t.option(__t.u32()),
+  peakLp: __t.option(__t.u32()),
+  tournamentWins: __t.option(__t.u32()),
+  opggUrl: __t.option(__t.string()),
 });
 export type PlayerInput = __Infer<typeof PlayerInput>;
 
@@ -110,6 +148,14 @@ export const Rank = __t.enum("Rank", {
 });
 export type Rank = __Infer<typeof Rank>;
 
+export const RankRuleInput = __t.object("RankRuleInput", {
+  tier: __t.string(),
+  minimum: __t.u32(),
+  low: __t.u32(),
+  high: __t.u32(),
+});
+export type RankRuleInput = __Infer<typeof RankRuleInput>;
+
 // The tagged union or sum type for the algebraic type `Role`.
 export const Role = __t.enum("Role", {
   Top: __t.unit(),
@@ -120,4 +166,18 @@ export const Role = __t.enum("Role", {
   Fill: __t.unit(),
 });
 export type Role = __Infer<typeof Role>;
+
+export const ScoutingNote = __t.object("ScoutingNote", {
+  key: __t.string(),
+  text: __t.string(),
+});
+export type ScoutingNote = __Infer<typeof ScoutingNote>;
+
+export const TeamInput = __t.object("TeamInput", {
+  captainPlayerId: __t.u32(),
+  name: __t.string(),
+  budget: __t.u32(),
+  position: __t.string(),
+});
+export type TeamInput = __Infer<typeof TeamInput>;
 
