@@ -211,8 +211,40 @@ export default function Page({
         </div>
       </div>
 
-      <div className="min-w-0 flex-1 overflow-y-auto p-4">
-        <p>C</p>
+      <div className="flex min-w-0 flex-1 flex-col gap-4 overflow-y-auto p-4">
+        <div className="grid shrink-0 grid-cols-4 gap-4">
+          {Array.from({ length: 8 }, (_, index) => (
+            <section
+              key={index}
+              aria-labelledby={`team-${index + 1}`}
+              className="flex min-w-0 flex-col gap-3 border bg-sidebar p-4"
+            >
+              <h2 id={`team-${index + 1}`} className="text-sm font-medium">
+                Team {index + 1}
+              </h2>
+              {(["Top", "Jungle", "Mid", "Adc", "Support"] as const).map(
+                (position) => {
+                  const RoleIcon = roleIcons[position]
+
+                  return (
+                    <div key={position} className="flex items-center gap-2">
+                      <span className="sr-only">{position}:</span>
+                      <RoleIcon className="h-6.5 w-6.5 shrink-0 bg-secondary p-0.5" />
+                      <span
+                        title="No Assignment"
+                        className="truncate font-medium text-muted-foreground italic"
+                      >
+                        No Assignment
+                      </span>
+                    </div>
+                  )
+                }
+              )}
+            </section>
+          ))}
+        </div>
+
+        <div className="min-h-64 w-full flex-1 shrink-0 border bg-sidebar" />
       </div>
 
       <div className="flex w-xs shrink-0 flex-col gap-4 overflow-y-auto border-l bg-sidebar p-4">
